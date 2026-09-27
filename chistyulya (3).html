@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Чистюлька — магазин бытовой химии</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=noHdAQKAHNEfF5BRdqYKt_edCBGNqLD3pueMs_uuRXtSWMpbyUUO5jPlsPX7ULbc_HhqdeIAjSTHSv617W-jIKiX-2Ibu41r-oV8MrutqIfJeinKanimi--Yd_KAx9HdZc9nLjf_Bqzyi8lLaOgpubUC9H_Cv62MFPknMIIFlOsR9yQirFqal3AAkOfwJjRlSVc2PhFO8xxgNYfMv8wVljW87ln0JbdCnpebs85SmQnzbnZ54dAm4h9ebB-3196bvbNk0O_iiEOEMgh1jHri7w" charset="UTF-8"></script><style>
+:root{--yellow:#ffdf45;--cream:#fffbea;--ink:#343b22;--muted:#777b61;--line:#eee5bd}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fffef8;color:var(--ink)}
+header{background:var(--yellow);padding:18px 16px;border-radius:0 0 24px 24px;position:sticky;top:0;z-index:2}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{background:white;border-radius:16px;padding:10px;font-size:25px}.brand h1{font-size:23px;margin:0}.brand small{color:#665b18}
+button{border:0;border-radius:13px;padding:12px 14px;font-weight:bold;background:var(--yellow);color:var(--ink);cursor:pointer}.cart{background:white}
+.hero{margin:16px;background:var(--yellow);border-radius:25px;padding:22px;display:flex;justify-content:space-between;align-items:center;gap:12px}.hero h2{font-size:30px;line-height:1.05;margin:8px 0}.hero p{font-size:14px;max-width:240px}.art{font-size:62px;line-height:1.25}
+main{padding:0 16px}.section-title{font-size:25px;margin:24px 0 12px}.search{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;font-size:16px;background:white}
+.categories{display:flex;gap:8px;overflow:auto;padding:12px 0}.categories button{white-space:nowrap;background:white;border:1px solid var(--line)}.categories button.active{background:var(--yellow);border-color:var(--yellow)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}.pic{height:110px;background:var(--cream);border-radius:13px;display:grid;place-items:center;font-size:55px}.tag{font-size:11px;color:var(--muted)}.name{font-weight:bold;font-size:14px;min-height:35px}.desc{font-size:12px;color:var(--muted);min-height:29px}.bottom{display:flex;align-items:center;justify-content:space-between;gap:5px}.price{font-size:17px;font-weight:bold}.add{padding:9px;font-size:12px}
+.info{background:var(--cream);border-radius:20px;padding:18px;margin:24px 0}.info h3{margin-top:0}.info p{font-size:14px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+.overlay{position:fixed;inset:0;background:#0006;z-index:5}.drawer{background:white;position:absolute;right:0;top:0;bottom:0;width:min(100%,430px);padding:20px;overflow:auto}.drawer-head{display:flex;justify-content:space-between;align-items:center}.cart-row{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.cart-row .emoji{font-size:30px}.cart-row .grow{flex:1}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:5px 9px;background:var(--cream)}.total{font-size:22px;font-weight:bold;margin:20px 0}.full{width:100%}.field{display:block;width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;margin:7px 0 12px;font-size:15px}.hidden{display:none!important}.empty{text-align:center;color:var(--muted);padding:35px 0}
+@media(min-width:700px){main{max-width:900px;margin:auto}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{max-width:900px;margin:20px auto}.pic{height:130px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><div class="logo" id="logoBox">🧽</div><div><h1>Чистюлька</h1><small>Чистота с заботой</small></div></div><div style="display:flex;gap:6px"><button onclick="openAdmin()" style="background:#fff">⚙️</button><button class="cart" onclick="openCart()">🛒 <span id="count">0</span></button></div></div></header>
+<section class="hero"><div><div>✨ Добро пожаловать!</div><h2>Чистота<br>начинается с нас</h2><p>Бытовая химия для чистого и уютного дома.</p><button onclick="document.getElementById('catalog').scrollIntoView()">Смотреть каталог →</button></div><div class="art">🧴<br>🧼</div></section>
+<main id="catalog">
+<h2 class="section-title">Наш каталог</h2>
+<input class="search" id="search" placeholder="🔎 Найти средство..." oninput="render()">
+<div class="categories" id="categories"></div>
+<div class="grid" id="products"></div>
+<div class="info"><h3>💛 Почему «Чистюлька»?</h3><p>Всё необходимое для дома в одном месте: средства для кухни, ванной, стирки и уборки. Удобно выбирать, просто покупать.</p></div>
+<div class="info"><h3>🚚 Доставка и оплата</h3><p>Условия доставки и способы оплаты уточняются при оформлении заказа. Телефон: +7 (900) 000-00-00</p></div>
+</main><footer>© 2026 «Чистюлька» · Магазин бытовой химии</footer>
+<div id="overlay" class="overlay hidden" onclick="if(event.target===this)closeCart()"><div class="drawer"><div class="drawer-head"><h2>Ваша корзина</h2><button onclick="closeCart()">✕</button></div><div id="cartItems"></div><div class="total" id="total"></div><button id="checkoutBtn" class="full" onclick="showForm()">Оформить заказ →</button><form id="form" class="hidden" onsubmit="submitOrder(event)"><h3>Данные для заказа</h3><label>Имя<input class="field" required name="name" placeholder="Ваше имя"></label><label>Телефон<input class="field" required name="phone" type="tel" placeholder="+7..."></label><label>Адрес<input class="field" required name="address" placeholder="Адрес доставки"></label><button class="full" type="submit">Подтвердить заказ</button></form><p id="success" class="hidden"></p></div></div>
+<script>
+const products=[
+{id:1,n:'Гель для мытья посуды',d:'Лимон, 500 мл',p:149,c:'Кухня',e:'🍋'},
+{id:2,n:'Средство для стёкол',d:'Без разводов',p:189,c:'Кухня',e:'🪟'},
+{id:3,n:'Гель для ванной',d:'Свежий аромат, 750 мл',p:239,c:'Ванная',e:'🫧'},
+{id:4,n:'Чистящий порошок',d:'Для кухни и ванной',p:129,c:'Ванная',e:'🧽'},
+{id:5,n:'Стиральный порошок',d:'Свежесть белья, 2 кг',p:399,c:'Стирка',e:'👕'},
+{id:6,n:'Кондиционер для белья',d:'Нежный аромат, 1 л',p:299,c:'Стирка',e:'🌸'},
+{id:7,n:'Универсальный очиститель',d:'Для разных поверхностей',p:219,c:'Уборка',e:'🧴'},
+{id:8,n:'Губки для посуды',d:'Набор из 5 штук',p:99,c:'Уборка',e:'🧽'}];
+let cart={},cat='Все';
+const money=n=>n.toLocaleString('ru-RU')+' ₽';
+document.getElementById('categories').innerHTML=['Все','Кухня','Ванная','Стирка','Уборка'].map(x=>`<button class="${x==='Все'?'active':''}" onclick="cat='${x}';document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));this.classList.add('active');render()">${x==='Все'?'Все товары':x}</button>`).join('');
+let audioCtx,lastSoundAt=0;
+function sound(type){try{let nowMs=Date.now();if(type==='click'&&nowMs-lastSoundAt<90)return;lastSoundAt=nowMs;audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();let notes={click:520,add:620,remove:280,success:660,error:180,open:440,close:350,save:740,nav:560};let f=notes[type]||520;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type==='success'||type==='save'?'sine':'triangle';o.connect(g);g.connect(audioCtx.destination);let now=audioCtx.currentTime;let duration=type==='success'||type==='save'?.22:.12;o.frequency.setValueAtTime(f,now);o.frequency.exponentialRampToValueAtTime(f*(type==='error'?.65:type==='close'?.8:1.35),now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.09,now+.01);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.start(now);o.stop(now+duration+.02)}catch(e){}}
+function mechanicalKey(){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();let now=audioCtx.currentTime;let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='square';o.frequency.setValueAtTime(115,now);o.frequency.exponentialRampToValueAtTime(62,now+.055);o.connect(g);g.connect(audioCtx.destination);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.045,now+.003);g.gain.exponentialRampToValueAtTime(.0001,now+.065);o.start(now);o.stop(now+.07)}catch(e){}}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){let el=e.target;if(el.matches('button,[role=button],input[type=submit]'))mechanicalKey()}},true);
+document.addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;let t=(b.innerText||'').toLowerCase();let type=t.includes('сохран')?'save':t.includes('удал')||t.includes('очист')?'remove':t.includes('заказ')||t.includes('подтверд')?'success':t.includes('закры')||t==='✕'?'close':t.includes('каталог')||t.includes('войти')?'nav':'click';sound(type)},true);
+function render(){let q=document.getElementById('search').value.toLowerCase();let list=products.filter(x=>(cat==='Все'||x.c===cat)&&(x.n+' '+x.d).toLowerCase().includes(q));document.getElementById('products').innerHTML=list.map(x=>`<article class="card"><div class="pic">${x.img?`<img src="${x.img}" alt="${x.n}" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px">`:x.e}</div><div class="tag">${x.c}</div><div class="name">${x.n}</div><div class="desc">${x.d}</div><div class="bottom"><span class="price">${money(x.p)}</span><button class="add" onclick="add(${x.id})">+ В корзину</button></div></article>`).join('')||'<div class="empty">Ничего не найдено</div>'}
+function add(id){cart[id]=(cart[id]||0)+1;sound('add');update();openCart()}
+function update(){let count=Object.values(cart).reduce((a,b)=>a+b,0);document.getElementById('count').textContent=count;let rows=Object.entries(cart).filter(([id,n])=>n>0);let total=rows.reduce((s,[id,n])=>s+products.find(x=>x.id==id).p*n,0);document.getElementById('cartItems').innerHTML=rows.length?rows.map(([id,n])=>{let x=products.find(x=>x.id==id);return `<div class="cart-row"><span class="emoji">${x.e}</span><div class="grow"><b>${x.n}</b><div class="qty"><button onclick="change(${id},-1)">−</button>${n}<button onclick="change(${id},1)">+</button></div></div><b>${money(x.p*n)}</b></div>`}).join(''):'<div class="empty">Корзина пуста 🛒</div>';document.getElementById('total').textContent=rows.length?'Итого: '+money(total):'';document.getElementById('checkoutBtn').classList.toggle('hidden',!rows.length)}
+function change(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0){delete cart[id];sound('remove')}else sound('add');update()}
+function openCart(){document.getElementById('overlay').classList.remove('hidden');update()}
+function closeCart(){document.getElementById('overlay').classList.add('hidden')}
+function showForm(){document.getElementById('form').classList.remove('hidden')}
+function submitOrder(e){e.preventDefault();let data=new FormData(e.target);let items=Object.entries(cart).filter(([id,n])=>n>0).map(([id,n])=>{let x=products.find(x=>x.id==id);return {name:x.n,qty:n,price:x.p}});let order={id:Date.now(),date:new Date().toLocaleString('ru-RU'),name:data.get('name'),phone:data.get('phone'),address:data.get('address'),items,total:items.reduce((s,x)=>s+x.price*x.qty,0)};let orders=JSON.parse(localStorage.getItem('chistyulyaOrders')||'[]');orders.unshift(order);localStorage.setItem('chistyulyaOrders',JSON.stringify(orders));sound('success');cart={};update();document.getElementById('form').classList.add('hidden');document.getElementById('success').classList.remove('hidden');document.getElementById('success').innerHTML='<b>💛 Спасибо за заказ!</b><br>Заказ сохранён. Товары убраны из корзины.';e.target.reset()}
+const savedLogo=localStorage.getItem("chistyulyaLogo");if(savedLogo)document.getElementById("logoBox").innerHTML=`<img src="${savedLogo}" alt="Логотип">`;render();update();
+</script>
+<style>
+#adminOverlay{position:fixed;inset:0;background:#0007;z-index:10;overflow:auto}
+#adminBox{background:#fffef8;max-width:700px;margin:20px auto;padding:20px;border-radius:24px;color:#343b22}
+#adminBox input,#adminBox textarea,#adminBox select{width:100%;padding:11px;border:1px solid #e5dcae;border-radius:10px;margin:5px 0 12px}
+#adminBox .admin-row{border:1px solid #eee5bd;background:#fff;padding:12px;border-radius:14px;margin:8px 0}#adminBox img{max-width:110px;max-height:110px;border-radius:12px;object-fit:contain;background:#fff8d8;padding:5px}#logoBox img{width:100%;height:100%;object-fit:contain;border-radius:12px}
+</style><div id="adminOverlay" class="hidden"><div id="adminBox">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><h2>⚙️ Админ-панель</h2><button onclick="closeAdmin()">✕</button></div>
+<div id="loginAdmin"><p>Введите пароль администратора:</p><input id="adminPass" type="password" placeholder="Пароль"><button onclick="loginAdmin()">Войти</button><p id="loginError" style="color:#b33"></p></div>
+<div id="adminContent" class="hidden">
+<h3>Основные настройки</h3><label>Логотип — фото из галереи<input id="logoFile" type="file" accept="image/*"></label><button onclick="removeLogo()" style="margin-bottom:12px">↩️ Вернуть губку</button><div id="logoPreview" style="margin:8px 0 14px">🧽 Текущий логотип — губка</div>
+<label>Название магазина<input id="setTitle"></label>
+<label>Подзаголовок<input id="setSubtitle"></label>
+<label>Текст баннера<textarea id="setHero"></textarea></label>
+<label>Телефон<input id="setPhone"></label>
+<label>Доставка<textarea id="setDelivery"></textarea></label>
+<button onclick="saveSettings()">💾 Сохранить настройки</button>
+<h3 style="margin-top:20px">Заказы</h3><div id="adminOrders"></div><button onclick="clearOrders()" style="background:#ffdede;margin-bottom:12px">🗑 Очистить заказы</button><h3 style="margin-top:20px">Товары</h3><div id="adminProducts"></div>
+<button onclick="addProduct()">➕ Добавить товар</button>
+<button onclick="saveProducts()" style="margin-left:6px">💾 Сохранить товары</button>
+<p style="font-size:12px;color:#777">Демо-пароль: 123321rrr. Для настоящего интернет-магазина нужен сервер и защищённая авторизация.</p>
+</div></div></div><script>
+const ADMIN_PASSWORD="123321rrr";
+let adminProducts=JSON.parse(localStorage.getItem("chistyulyaProducts")||"null")||products.map(x=>({...x}));
+function openAdmin(){document.getElementById("adminOverlay").classList.remove("hidden")}
+function closeAdmin(){document.getElementById("adminOverlay").classList.add("hidden")}
+function loginAdmin(){if(document.getElementById("adminPass").value===ADMIN_PASSWORD){document.getElementById("loginAdmin").classList.add("hidden");document.getElementById("adminContent").classList.remove("hidden");loadAdmin()}else document.getElementById("loginError").textContent="Неверный пароль"}
+function applyLogo(src){const box=document.getElementById("logoBox");box.innerHTML=src?`<img src="${src}" alt="Логотип">`:"🧽";if(src)localStorage.setItem("chistyulyaLogo",src);else localStorage.removeItem("chistyulyaLogo");const preview=document.getElementById("logoPreview");if(preview)preview.innerHTML=src?`<img src="${src}" alt="Предпросмотр логотипа">`:"🧽 Текущий логотип — губка"}
+function removeLogo(){applyLogo("")}
+document.getElementById("logoFile").onchange=function(){const file=this.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>applyLogo(reader.result);reader.readAsDataURL(file)}
+function renderAdminOrders(){let box=document.getElementById('adminOrders'),orders=JSON.parse(localStorage.getItem('chistyulyaOrders')||'[]');box.innerHTML=orders.length?orders.map(o=>`<div class="admin-row"><b>Заказ #${o.id}</b><div style="font-size:12px;color:#777">${o.date}</div><p><b>Клиент:</b> ${o.name}<br><b>Телефон:</b> ${o.phone}<br><b>Адрес:</b> ${o.address}</p><div>${o.items.map(i=>`${i.name} × ${i.qty} — ${money(i.price*i.qty)}`).join('<br>')}</div><b>Итого: ${money(o.total)}</b></div>`).join(''):'<div class="empty">Заказов пока нет</div>'}function clearOrders(){if(confirm('Удалить все заказы?')){localStorage.removeItem('chistyulyaOrders');renderAdminOrders()}}function loadAdmin(){let s=JSON.parse(localStorage.getItem("chistyulyaSettings")||"{}");setTitle.value=s.title||"Чистюлька";setSubtitle.value=s.subtitle||"Чистота с заботой";setHero.value=s.hero||"Чистота начинается с нас";setPhone.value=s.phone||"+7 (900) 000-00-00";setDelivery.value=s.delivery||"Условия доставки уточняются при заказе";renderAdminOrders();renderAdminProducts()}
+function renderAdminProducts(){adminProductsBox=document.getElementById("adminProducts");adminProductsBox.innerHTML=adminProducts.map((x,i)=>`<div class="admin-row"><b>Товар ${i+1}</b><label>Название<input data-i="${i}" data-k="n" value="${x.n}"></label><label>Описание<input data-i="${i}" data-k="d" value="${x.d}"></label><label>Цена<input type="number" data-i="${i}" data-k="p" value="${x.p}"></label><label>Категория<input data-i="${i}" data-k="c" value="${x.c}"></label><label>Эмодзи, если нет фото<input data-i="${i}" data-k="e" value="${x.e||''}"></label><div>${x.img?`<img src="${x.img}" alt="Фото товара">`:'📷 Фото не выбрано'}</div><label>Добавить фото из галереи телефона<input type="file" accept="image/*" data-photo="${i}"></label><button onclick="removeProduct(${i})">Удалить</button></div>`).join("");adminProductsBox.querySelectorAll('input[data-i]').forEach(el=>el.oninput=()=>{adminProducts[+el.dataset.i][el.dataset.k]=el.dataset.k==="p"?Number(el.value):el.value});adminProductsBox.querySelectorAll('input[data-photo]').forEach(el=>el.onchange=()=>{let i=+el.dataset.photo,file=el.files[0];if(!file)return;let reader=new FileReader();reader.onload=()=>{adminProducts[i].img=reader.result;renderAdminProducts()};reader.readAsDataURL(file)})}
+function addProduct(){adminProducts.push({id:Date.now(),n:"Новый товар",d:"Описание товара",p:0,c:"Уборка",e:"🧴",img:""});renderAdminProducts()}
+function removeProduct(i){adminProducts.splice(i,1);renderAdminProducts()}
+function saveProducts(){localStorage.setItem("chistyulyaProducts",JSON.stringify(adminProducts));products.splice(0,products.length,...adminProducts);render();update();sound('success');alert("Товары сохранены")}
+function saveSettings(){localStorage.setItem("chistyulyaSettings",JSON.stringify({title:setTitle.value,subtitle:setSubtitle.value,hero:setHero.value,phone:setPhone.value,delivery:setDelivery.value}));document.querySelector(".brand h1").textContent=setTitle.value;document.querySelector(".brand small").textContent=setSubtitle.value;document.querySelector(".hero h2").innerHTML=setHero.value.replace(/\n/g,"<br>");document.querySelector("#delivery p").textContent=setDelivery.value;document.querySelector("#delivery").innerHTML=document.querySelector("#delivery").innerHTML.replace(/\+7 \(900\) 000-00-00/g,setPhone.value);sound('success');alert("Настройки сохранены")}
+</script></body>
+</html>
